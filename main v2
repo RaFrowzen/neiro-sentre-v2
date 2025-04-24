@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>НейроЦентр - все нейронки на одном сайте</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4faff;
+      color: #222;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: #00c2ff;
+      color: white;
+      padding: 20px 40px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .header-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .subheader {
+      font-size: 18px;
+      margin-top: 10px;
+      font-weight: normal;
+      opacity: 0.9;
+    }
+
+    .category-filter {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .filter-btn {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: 1px solid white;
+      margin: 0 8px;
+      padding: 8px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn.active {
+      background: white;
+      color: #00c2ff;
+    }
+
+    main {
+      padding: 40px 20px;
+      max-width: 1400px;
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      position: relative;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      padding: 30px;
+      width: 260px;
+      text-align: center;
+      transition: transform 0.3s ease;
+      position: relative;
+      overflow: visible;
+    }
+
+    .card.featured {
+      border: 2px solid #00c2ff;
+      box-shadow: 0 6px 20px rgba(0,194,255,0.2);
+    }
+
+    .card img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+
+    .card:hover {
+      transform: scale(1.05);
+    }
+
+    .btn {
+      background: #00c2ff;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 15px;
+    }
+
+    .btn:hover {
+      background: #00a9e0;
+    }
+
+    .description {
+      font-size: 14px;
+      color: #555;
+      margin-top: 10px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 15px 0;
+    }
+
+    .tag {
+      background: #f0f9ff;
+      color: #0077cc;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
+
+    .rating {
+      margin: 10px 0;
+      color: #ffb700;
+    }
+
+    .new-badge {
+      background: #ff4757;
+      color: white;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      position: absolute;
+      top: -10px;
+      right: -10px;
+    }
+
+    .shape {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.15;
+      z-index: 0;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .shape1 {
+      width: 200px;
+      height: 200px;
+      background: #00c2ff;
+      top: -60px;
+      left: -60px;
+    }
+
+    .shape2 {
+      width: 150px;
+      height: 150px;
+      background: #ffcb00;
+      bottom: -40px;
+      right: 50px;
+    }
+
+    .shape3 {
+      width: 120px;
+      height: 120px;
+      background: #a1ffce;
+      top: 200px;
+      right: -60px;
+    }
+
+    footer {
+      background: white;
+      text-align: center;
+      padding: 40px 20px;
+      margin-top: 60px;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      text-align: left;
+    }
+
+    .footer-section h4 {
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .social-links a {
+      color: #666;
+      text-decoration: none;
+      display: block;
+      margin: 8px 0;
+    }
+
+    .newsletter input {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      width: 200px;
+      margin-right: 10px;
+    }
+
+    .qr {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      display: inline-block;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin: 60px auto 0;
+      text-align: center;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0px); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div style="font-size: 24px; font-weight: bold;">НейроЦентр</div>
+      <div class="subheader">Крупнейший каталог нейросетевых технологий с подробными обзорами</div>
+    </div>
+  </header>
+
+  <div class="category-filter">
+    <button class="filter-btn active">Все</button>
+    <button class="filter-btn">Генерация изображений</button>
+    <button class="filter-btn">Видео-инструменты</button>
+    <button class="filter-btn">Текстовые модели</button>
+  </div>
+
+  <main>
+    <div class="shape shape1"></div>
+    <div class="shape shape2"></div>
+    <div class="shape shape3"></div>
+
+    <div class="card featured">
+      <div class="new-badge">Новинка!</div>
+      <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="Hugging Face">
+      <h3>Hugging Face</h3>
+      <div class="rating">★★★★☆ 4.2/5</div>
+      <div class="card-tags">
+        <span class="tag">NLP</span>
+        <span class="tag">Open Source</span>
+        <span class="tag">API</span>
+      </div>
+      <a href="https://huggingface.co/" class="btn" target="_blank">Перейти</a>
+      <div class="description">Крупнейшее сообщество ИИ-разработчиков с открытыми моделями</div>
+    </div>
+
+    <div class="card">
+      <img src="https://openart.ai/static/media/logo-icon.9ef618fd.svg" alt="OpenArt">
+      <h3>OpenArt</h3>
+      <div class="rating">★★★★★ 4.8/5</div>
+      <div class="card-tags">
+        <span class="tag">Генерация</span>
+        <span class="tag">Арт</span>
+        <span class="tag">AI</span>
+      </div>
+      <a href="https://openart.ai/" class="btn" target="_blank">Перейти</a>
+      <div class="description">Продвинутый генератор изображений по текстовому описанию</div>
+    </div>
+
+    <div class="card">
+      <img src="https://playgroundai.com/favicon.ico" alt="Playground AI">
+      <h3>Playground AI</h3>
+      <div class="rating">★★★★☆ 4.5/5</div>
+      <div class="card-tags">
+        <span class="tag">Редактор</span>
+        <span class="tag">Генерация</span>
+      </div>
+      <a href="https://playgroundai.com/" class="btn" target="_blank">Перейти</a>
+      <div class="description">Мощный инструмент для создания и редактирования изображений</div>
+    </div>
+
+    <div class="card">
+      <div class="new-badge">Обновлено</div>
+      <img src="https://leonardo.ai/favicon.ico" alt="Leonardo AI">
+      <h3>Leonardo AI</h3>
+      <div class="rating">★★★★☆ 4.3/5</div>
+      <div class="card-tags">
+        <span class="tag">Дизайн</span>
+        <span class="tag">3D</span>
+        <span class="tag">Арт</span>
+      </div>
+      <a href="https://leonardo.ai/" class="btn" target="_blank">Перейти</a>
+      <div class="description">Профессиональный инструмент для создания концепт-артов</div>
+    </div>
+
+    <div class="card">
+      <img src="https://runwayml.com/favicon.ico" alt="Runway ML">
+      <h3>Runway ML</h3>
+      <div class="rating">★★★★★ 4.7/5</div>
+      <div class="card-tags">
+        <span class="tag">Видео</span>
+        <span class="tag">Музыка</span>
+        <span class="tag">ML</span>
+      </div>
+      <a href="https://runwayml.com/" class="btn" target="_blank">Перейти</a>
+      <div class="description">Комплексное решение для AI-видеомонтажа</div>
+    </div>
+
+    <div class="card">
+      <img src="https://www.pixray.gob.io/favicon.ico" alt="Pixray">
+      <h3>Pixray</h3>
+      <div class="rating">★★★☆☆ 3.9/5</div>
+      <div class="card-tags">
+        <span class="tag">Эксперимент</span>
+        <span class="tag">Генерация</span>
+      </div>
+      <a href="https://pixray.gob.io/" class="btn" target="_blank">Перейти</a>
+      <div class="description">Экспериментальный генератор изображений с настройками</div>
+    </div>
+  </main>
+
+  <div class="qr">
+    <p>📱 Мобильная версия через QR-код:</p>
+    <img src="https://api.qrserver.com/v1/create-qr-code/?data=https%3A%2F%2Fneirosenter.com&size=150x150" 
+         alt="QR Code" 
+         width="150">
+    <p style="margin-top: 10px; font-size: 12px; color: #666;">Наведите камеру для перехода</p>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>О проекте</h4>
+        <p>Ежедневно обновляемая база нейросетевых сервисов с экспертными оценками</p>
+      </div>
+      <div class="footer-section">
+        <h4>Контакты</h4>
+        <div class="social-links">
+          <a href="#">📢 Telegram</a>
+          <a href="#">🎥 YouTube</a>
+          <a href="#">✉️ support@neuros.ru</a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h4>Рассылка</h4>
+        <div class="newsletter">
+          <input type="email" placeholder="Ваш email">
+          <button class="btn">Подписаться</button>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 30px; color: #666;">
+      © 2025 НейроЦентр. Все права защищены
+    </div>
+  </footer>
+</body>
+</html>
